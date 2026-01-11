@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import type { Provider } from '../../app/types';
 
 interface Props {
-    items: Provider[]
+    items: Provider[],
 }
 
 export const ItemList: FC<Props> = ({items = []}) => (
@@ -17,9 +17,9 @@ export const ItemList: FC<Props> = ({items = []}) => (
         <tbody>
             {items.map((item) => (
                 <tr key={`row-${item.providerid.toString()}`}>
-                    <td key={`cell-${item.providerid.toString()}`}>{item.npi}</td>
-                    <td key={`cell-${item.firstname.toString()}`}>{item.firstname}</td>
-                    <td key={`cell-${item.lastname.toString()}`}>{item.lastname}</td>
+                    <td key={`cell-${item.providerid.toString()}`} className='px-1'>{item.npi}</td>
+                    <td key={`cell-${item.firstname.toString()}`} className='px-1'>{item.firstname}</td>
+                    <td key={`cell-${item.lastname.toString()}`} className='px-1'>{item.lastname}</td>
                 </tr>
             ))}
         </tbody>
