@@ -3,9 +3,10 @@ import type { Provider } from '../../app/types';
 
 interface Props {
     items: Provider[],
+    onRowClick?: (id: number) => () => void,
 }
 
-export const ItemList: FC<Props> = ({items = []}) => (
+export const ItemList: FC<Props> = ({items = [], onRowClick}) => (
     <table>
         <thead>
             <tr>
@@ -16,7 +17,7 @@ export const ItemList: FC<Props> = ({items = []}) => (
         </thead>
         <tbody>
             {items.map((item) => (
-                <tr key={`row-${item.providerid.toString()}`}>
+                <tr key={`row-${item.providerid.toString()}`} onClick={onRowClick?.(item.providerid)}>
                     <td key={`cell-${item.providerid.toString()}`} className='px-1'>{item.npi}</td>
                     <td key={`cell-${item.firstname.toString()}`} className='px-1'>{item.firstname}</td>
                     <td key={`cell-${item.lastname.toString()}`} className='px-1'>{item.lastname}</td>
