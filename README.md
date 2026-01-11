@@ -71,3 +71,23 @@ export default defineConfig([
   },
 ])
 ```
+
+## Drills
+
+1. Drill A: List + search + select + detail
+    - Render a list of items
+    - Search filter
+    - Click selects item → detail view
+    - Add “Clear selection”
+
+2. Drill B: Fetch + loading/error + retry
+    - Replace dummy data with async fetch (or mocked promise)
+    - Loading spinner/text
+    - Error state + retry button
+    - Optional: abort stale requests on query change
+
+3. Drill C: Add/edit form
+    - Add item” form
+    - Basic validation (required name)
+    - Edit selected item
+    - Keep state updates immutable and simple
