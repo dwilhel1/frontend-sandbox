@@ -8,6 +8,20 @@ import getProviders from '../api/providers'
 
 function App() {
     const [providers, setProviders] = useState<Provider[]>([]);
+    const [query, setQuery] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+    const [providerId, setProviderId] = useState<number | null>(null);
+    const filteredItems = query ? providers.filter((row) => {
+      if (row.firstname.toLowerCase().includes(query.toLowerCase()) ||
+          row.lastname.toLowerCase().includes(query.toLowerCase())) {
+        return row;
+      }
+      return;
+    }) : providers;
+    const onRowClick = (id: number) => () => {
+      setProviderId(id);
+      setModalOpen(true);
+    };
 
     useEffect(() => {
       async function loadProviders() {
@@ -17,20 +31,6 @@ function App() {
 
       loadProviders();
   }, []);
-  const [query, setQuery] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
-  const [providerId, setProviderId] = useState<number | null>(null);
-  const filteredItems = query ? providers.filter((row) => {
-    if (row.firstname.toLowerCase().includes(query.toLowerCase()) ||
-        row.lastname.toLowerCase().includes(query.toLowerCase())) {
-      return row;
-    }
-    return;
-  }) : providers;
-  const onRowClick = (id: number) => () => {
-    setProviderId(id);
-    setModalOpen(true);
-  };
 
   return (
     <>
@@ -42,10 +42,10 @@ function App() {
         setQuery={setQuery}
         value={query}
       />
-      <ItemList items={filteredItems} onRowClick={onRowClick}/>
-      {modalOpen ? <DetailView
+      { providers.length === 0 ? <p>Loading providers...</p> : <ItemList items={filteredItems} onRowClick={onRowClick}/> }
+      { modalOpen ? <DetailView
         onClose={() => { setModalOpen(false); setProviderId(null); }}
-        content={items.find(item => item.providerid === providerId)?.firstname || 'No details available'}
+        content={providers.find(provider => provider.providerid === providerId)?.firstname || 'No details available'}
         title={`Provider ID: ${providerId}`}
       /> : null}
     </>
