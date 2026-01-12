@@ -87,7 +87,7 @@ export default defineConfig([
     - Optional: abort stale requests on query change
 
 3. Drill C: Add/edit form
-    - Add item” form
+    - Add item form
     - Basic validation (required name)
     - Edit selected item
     - Keep state updates immutable and simple
