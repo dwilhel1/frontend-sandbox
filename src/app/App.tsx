@@ -1,24 +1,32 @@
 import { ItemList } from '../components/ItemList'
 import './App.css'
-import providers from '../data/providers.json'
 import type { Provider } from './types'
 import { SearchBar } from '../components/SearchBar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DetailView } from '../components/DetailView'
-
-const items: Provider[] = providers.providers;
+import getProviders from '../api/providers'
 
 function App() {
+    const [providers, setProviders] = useState<Provider[]>([]);
+
+    useEffect(() => {
+      async function loadProviders() {
+        const data = await getProviders();
+        setProviders(data);
+      }
+
+      loadProviders();
+  }, []);
   const [query, setQuery] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [providerId, setProviderId] = useState<number | null>(null);
-  const filteredItems = query ? items.filter((row) => {
+  const filteredItems = query ? providers.filter((row) => {
     if (row.firstname.toLowerCase().includes(query.toLowerCase()) ||
         row.lastname.toLowerCase().includes(query.toLowerCase())) {
       return row;
     }
     return;
-  }) : items;
+  }) : providers;
   const onRowClick = (id: number) => () => {
     setProviderId(id);
     setModalOpen(true);
