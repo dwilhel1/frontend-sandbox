@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { providers } from '../data/providers';
 import './App.css';
+import { Search } from '../components/search/search';
 
 type Provider = {
   firstname?: string;
@@ -19,6 +20,9 @@ const typedProviders: Provider[] = providers.map((p) => ({
 function App() {
   const [data, setData] = useState<Provider[]>(typedProviders);
   const [search, setSearch] = useState<string>('');
+  const handleSearch = (searchValue: string) => {
+    setSearch(searchValue);
+  };
 
   useEffect(() => {
     if (search) {
@@ -31,12 +35,10 @@ function App() {
   return (
     <>
       <h1 className="text-3xl font-bold">Providers</h1>
-      <input
-        placeholder="Search..."
-        onChange={(e) => setSearch(e.target.value.trim().toLowerCase())}
+      <Search
         value={search}
-        type="text">
-      </input>
+        setSearch={handleSearch}
+      ></Search>
       {
         data.map((p) => <p key={p.npi}>{p.firstname} {p.lastname} enabled: {p.enabledforscheduling ? 'true' : 'false'}</p>)
       }
