@@ -17,16 +17,18 @@ const typedProviders: Provider[] = providers.map((p) => ({
   npi: p.npi,
 }));
 
+const delay = 500;
+
 function App() {
   const [data, setData] = useState<Provider[]>(typedProviders);
   const [search, setSearch] = useState<string>('');
-  const handleSearch = (searchValue: string) => {
-    setSearch(searchValue);
-  };
 
   useEffect(() => {
     if (search) {
-      setData(data.filter((d) => `${d.firstname}${d.lastname}`.trim().toLowerCase().includes(search)));
+      const timer = setTimeout(() => {
+        setData(data.filter((d) => `${d.firstname}${d.lastname}`.trim().toLowerCase().includes(search)));
+      }, delay);
+      return () => clearTimeout(timer);
     } else {
       setData(typedProviders);
     }
@@ -37,7 +39,7 @@ function App() {
       <h1 className="text-3xl font-bold">Providers</h1>
       <Search
         value={search}
-        setSearch={handleSearch}
+        setSearch={setSearch}
       ></Search>
       {
         data.map((p) => <p key={p.npi}>{p.firstname} {p.lastname} enabled: {p.enabledforscheduling ? 'true' : 'false'}</p>)
