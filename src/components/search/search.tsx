@@ -1,19 +1,16 @@
 import type { FC } from "react";
+import { useSearch } from "../../hooks/useSearch";
 
-interface Props {
-    value?: string,
-    setSearch: (arg0: string) => void;
-}
-
-const Search: FC<Props> = ({ value = '', setSearch }) => {
+const Search: FC = () => {
+    const { search, setSearch } = useSearch();
 
     return (
         <input
-        placeholder="Search..."
-        onChange={(e) => setSearch(e.target.value.trim().toLowerCase())}
-        value={value}
-        type="text">
-      </input>
+            placeholder="Search..."
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            type="text">
+        </input>
     )
 };
 
